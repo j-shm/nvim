@@ -48,6 +48,8 @@ require('lazy').setup({
   --
   require 'custom/plugins/leap',
 
+  require 'custom/plugins/avante',
+
   -- require 'custom/plugins/dbee',
 
   -- require 'custom/plugins/markdown-viewer',
