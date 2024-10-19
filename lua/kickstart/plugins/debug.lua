@@ -23,17 +23,19 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+    'mfussenegger/nvim-dap-python',
   },
   keys = function(_, keys)
     local dap = require 'dap'
     local dapui = require 'dapui'
     return {
       -- Basic debugging keymaps, feel free to change to your liking!
-      { '<F5>', dap.continue, desc = 'Debug: Start/Continue' },
-      { '<F1>', dap.step_into, desc = 'Debug: Step Into' },
-      { '<F2>', dap.step_over, desc = 'Debug: Step Over' },
-      { '<F3>', dap.step_out, desc = 'Debug: Step Out' },
+      { '<Left>', dap.continue, desc = 'Debug: Start/Continue' },
+      { '<Down>', dap.step_into, desc = 'Debug: Step Into' },
+      { '<Right>', dap.step_over, desc = 'Debug: Step Over' },
+      { '<Up>', dap.step_out, desc = 'Debug: Step Out' },
       { '<leader>b', dap.toggle_breakpoint, desc = 'Debug: Toggle Breakpoint' },
+      { '<leader>e', dapui.eval, desc = 'Debug: Eval' },
       {
         '<leader>B',
         function()
@@ -43,6 +45,9 @@ return {
       },
       -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
       { '<F7>', dapui.toggle, desc = 'Debug: See last session result.' },
+      { '<leader>du', dapui.close, desc = 'Debug: Close UI' },
+      { '<leader>de', dap.terminate, desc = 'Debug: Exit' },
+      { '<leader>dl', dap.run_last, desc = 'Debug: Last' },
       unpack(keys),
     }
   end,
@@ -65,7 +70,6 @@ return {
         -- Update this to ensure that you have the debuggers for the langs you want
       },
     }
-
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
     dapui.setup {
@@ -89,16 +93,7 @@ return {
     }
 
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-    dap.listeners.before.event_exited['dapui_config'] = dapui.close
-
-    -- Install golang specific config
-    require('dap-go').setup {
-      delve = {
-        -- On Windows delve must be run attached or it crashes.
-        -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-        detached = vim.fn.has 'win32' == 0,
-      },
-    }
+    dap.listeners.before.event_terminated['dapui_config'] = function() end
+    dap.listeners.before.event_exited['dapui_config'] = function() end
   end,
 }

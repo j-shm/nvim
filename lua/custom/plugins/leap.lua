@@ -7,7 +7,9 @@ return {
       's',
       mode = { 'n', 'x', 'o' },
       function()
-        require('flash').jump()
+        require('flash').jump {
+          search = { multi_window = true },
+        }
       end,
       desc = 'Flash',
     },
