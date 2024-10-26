@@ -50,6 +50,8 @@ require('lazy').setup({
 
   require 'custom/plugins/avante',
 
+  require 'custom/plugins/tmux',
+
   -- require 'custom/plugins/dbee',
 
   -- require 'custom/plugins/markdown-viewer',
